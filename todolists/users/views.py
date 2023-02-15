@@ -1,4 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.pagination import LimitOffsetPagination
 
 from .models import Users, Project, ToDo
 from .serializers import UsersModelSerializer, ProjectModelSerializer, ToDoModelSerializer
@@ -19,3 +20,18 @@ class ProjectModelViewSet(ModelViewSet):
 class ToDoModelViewSet(ModelViewSet):
     queryset = ToDo.objects.all()
     serializer_class = ToDoModelSerializer
+
+
+# пагинация, устанавливаем лимит для конкретного класса
+# при этом в settings может быть установлен другой общий лимит для приложения!
+# (т.к. настройки во view приоритетны над всеми другими настройками).
+class ToDoOffsetPagination(LimitOffsetPagination):
+    default_limit = 2
+
+# задаем класс представления с пагинацией
+
+
+class ToDoLimitOffsetPaginatonViewSet(ModelViewSet):
+    queryset = ToDo.objects.all()
+    serializer_class = ToDoModelSerializer
+    pagination_class = ToDoOffsetPagination
