@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'users'
+    'users',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #         'rest_framework.renderers.BrowsableAPIRenderer' #чтобы визуально было как обычно
 #     ]
 # }
+
+REST_FRAMEWORK = {
+    # добавляем фильтрацию по умолчанию
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    #   добавляем пагинацию
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # количество записей на странице
+    'PAGE_SIZE': 2
+}
