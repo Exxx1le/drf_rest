@@ -1,13 +1,23 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.permissions import IsAdminUser, BasePermission
 
 from .models import Users, Project, ToDo
 from .serializers import UsersModelSerializer, ProjectModelSerializer, ToDoModelSerializer
+
+# создание собственного класса для прав
+
+
+class StaffOnly(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_staff
 
 
 class UsersModelViewSet(ModelViewSet):
     #   renderer_classes = [JSONRenderer]  #чтобы сделать представление в JSON
     #   renderer_classes = [AdminRenderer] # в виде для админа
+    permission_classes = [IsAdminUser]  # доступ только для админа
+ # permission_classes = [StaffOnly] # для собственных прав
     queryset = Users.objects.all()
     serializer_class = UsersModelSerializer
 
