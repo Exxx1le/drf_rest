@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'users',
     'django_filters',
+    # добавляем аутентификацию по токенам (нужно сделать migrate после этого)
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -148,5 +150,18 @@ REST_FRAMEWORK = {
     #   добавляем пагинацию
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     # количество записей на странице
-    'PAGE_SIZE': 2
+    'PAGE_SIZE': 2,
+    # добавляем разрешения
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     # только зарегистрированные пользователи
+    #     'rest_framework.permissions.IsAuthenticated'
+    #     # права для всего приложения
+    #     'rest_framework.premissons.DjangoModelPermissionsOrAnonReadOnly'
+    # ],
+    # варианты авторизации - базовая, по токенам, по сессиям
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'rest_framework.authentication.BasicAuthentication',
+    #     'rest_framework.authentication.SessionAuthentication',
+    #     'rest_framework.authentication.TokenAuthentication',
+    # ]
 }
