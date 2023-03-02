@@ -152,12 +152,12 @@ REST_FRAMEWORK = {
     # количество записей на странице
     'PAGE_SIZE': 2,
     # добавляем разрешения
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     # только зарегистрированные пользователи
-    #     'rest_framework.permissions.IsAuthenticated'
-    #     # права для всего приложения
-    #     'rest_framework.premissons.DjangoModelPermissionsOrAnonReadOnly'
-    # ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        #     # только зарегистрированные пользователи
+        'rest_framework.permissions.IsAuthenticated'
+        #     # права для всего приложения
+        # 'rest_framework.premissons.DjangoModelPermissionsOrAnonReadOnly'
+    ],
     # варианты авторизации - базовая, по токенам, по сессиям
     # 'DEFAULT_AUTHENTICATION_CLASSES': [
     #     'rest_framework.authentication.BasicAuthentication',
