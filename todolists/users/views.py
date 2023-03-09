@@ -1,9 +1,10 @@
+from rest_framework import generics
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAdminUser, BasePermission
 
 from .models import Users, Project, ToDo
-from .serializers import UsersModelSerializer, ProjectModelSerializer, ToDoModelSerializer
+from .serializers import UsersModelSerializer, UsersSerizalizerWithFullName, ProjectModelSerializer, ToDoModelSerializer
 
 # создание собственного класса для прав
 
@@ -20,6 +21,27 @@ class UsersModelViewSet(ModelViewSet):
  # permission_classes = [StaffOnly] # для собственных прав
     queryset = Users.objects.all()
     serializer_class = UsersModelSerializer
+
+
+# версионирование
+class UserListAPIView(generics.ListAPIView):
+    queryset = Users.objects.all()
+    serializer_class = UsersModelSerializer
+
+    # изменяем стандартный сериализатор
+    def get_serializer_class(self):
+        # для версионирования QueryParameterVersioning
+        # version = self.request.query_params.get('version')
+        # if version == '2.0':
+        #     return UsersSerizalizerWithFullName
+        # return UsersModelSerializer
+
+        # для AcceptHeaderVersioning
+        # self.request.headers
+
+        if self.request.version == '0.2':
+            return UsersSerizalizerWithFullName
+        return UsersModelSerializer
 
 
 class ProjectModelViewSet(ModelViewSet):
