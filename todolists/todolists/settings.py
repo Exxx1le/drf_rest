@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django_filters',
     # добавляем аутентификацию по токенам (нужно сделать migrate после этого)
     'rest_framework.authtoken',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -145,6 +146,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # }
 
 REST_FRAMEWORK = {
+    # версионирование
+    # автоматическое добавление версий в конце 8000/api/версия
+    # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
+    # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.QueryParameterVersioning',
+    # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.AcceptHeaderVersioning',
     # добавляем фильтрацию по умолчанию
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     #   добавляем пагинацию
@@ -154,9 +161,9 @@ REST_FRAMEWORK = {
     # добавляем разрешения
     'DEFAULT_PERMISSION_CLASSES': [
         #     # только зарегистрированные пользователи
-        'rest_framework.permissions.IsAuthenticated'
+        # 'rest_framework.permissions.IsAuthenticated'
         #     # права для всего приложения
-        # 'rest_framework.premissons.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ],
     # варианты авторизации - базовая, по токенам, по сессиям
     # 'DEFAULT_AUTHENTICATION_CLASSES': [

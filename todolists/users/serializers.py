@@ -11,6 +11,14 @@ class UsersModelSerializer(ModelSerializer):
         # exclude = ()
         # fields = ('first_name', 'last_name')
 
+# добавляем для версионности
+
+
+class UsersSerizalizerWithFullName(ModelSerializer):
+    class Meta:
+        model = Users
+        fields = ('first_name', 'last_name')
+
 
 class ProjectModelSerializer(ModelSerializer):
     # author = UsersModelSerializer()
