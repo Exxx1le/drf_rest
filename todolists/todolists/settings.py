@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     'django_filters',
     # добавляем аутентификацию по токенам (нужно сделать migrate после этого)
     'rest_framework.authtoken',
-    'drf_yasg'
+    'drf_yasg',
+    "django.contrib.staticfiles",  # Required for GraphQL
+    "graphene_django"
 ]
 
 MIDDLEWARE = [
@@ -171,4 +173,8 @@ REST_FRAMEWORK = {
     #     'rest_framework.authentication.SessionAuthentication',
     #     'rest_framework.authentication.TokenAuthentication',
     # ]
+}
+
+GRAPHENE = {
+    "SCHEMA": "todolists.schema.schema"
 }
