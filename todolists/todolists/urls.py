@@ -4,6 +4,7 @@ from rest_framework.routers import DefaultRouter, SimpleRouter
 from rest_framework.authtoken import views
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from graphene_django.views import GraphQLView
 
 from users.views import UsersModelViewSet, UserListAPIView, ProjectModelViewSet, ToDoModelViewSet
 
@@ -34,6 +35,8 @@ urlpatterns = [
     path('api/', include(router.urls)),
     # прописываем токены (импорт views из authtoken)
     path('api-token-auth/', views.obtain_auth_token),
+    # добавляем GraphQL
+    path('graphql/', GraphQLView.as_view(graphiql=True)),
     # UrlPathVersioning
     re_path(r'^api/(?P<version>\d.\d)/users/$', UserListAPIView.as_view()),
     # NamespaceVersioning
