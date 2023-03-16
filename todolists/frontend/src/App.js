@@ -95,6 +95,26 @@ class App extends React.Component {
     this.load_data()
   }
 
+  deleteProject(id) {
+    const headers = this.get_headers()
+    axios.delete(`http://127.0.0.1:8000/api/projects/${id}`, { headers, headers })
+      .then(response => {
+        this.setState({ projects: this.state.projects.filter((item) => item.id !== id) })
+      }).catch(error => console.log(error))
+  }
+
+  createProject(name, author) {
+    const headers = this.get_headers()
+    const data = { name: name, author: author }
+    axios.post(`http://127.0.0.1:8000/api/projects/`, data, { headers, headers })
+      .then(response => {
+        let new_project = response.data
+        const author = this.state.authors.filter((item) => item.id === new_project.author)[0]
+        new_project.author = author
+        this.setState({ projects: [...this.state.projects, new_project] })
+      }).catch(error => console.log(error))
+  }
+
 
   render() {
     return (
@@ -116,7 +136,6 @@ class App extends React.Component {
           </nav>
           <Switch>
             <Route exact path='/' component={() => <UserList users={this.state.users} />} />
-            <Route exact path='/projects' component={() => <ProjectList users={this.state.projects} />} />
             <Route path='/user/:id'>
               <ProjectListAuthors projects={this.state.projects} />
             </Route>
@@ -124,6 +143,11 @@ class App extends React.Component {
               this.get_token(username, password)} />} />
             <Redirect from='/project' to='/projects' />
             <Route component={NotFound404} />
+            <Route exact path='/projects/create' component={() => <ProjectForm />} />
+            <Route exact path='/projects' component={() => <ProjectList
+              items={this.state.projects} deleteProject={(id) => this.deleteProject(id)} />} />
+            <Route exact path='/projects/create' component={() => <ProjectForm
+              authors={this.state.authors} createProject={(name, author) => this.createProject(name, author)} />} />
           </Switch>
         </BrowserRouter>
       </div >
