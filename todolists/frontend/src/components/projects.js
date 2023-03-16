@@ -11,6 +11,9 @@ const ProjectItem = ({ project }) => {
             <td>
                 {project.author}
             </td>
+            <td><button onClick={() => deleteProject(item.id)}
+                type='button'>Delete</button>
+            </td>
         </tr>
     )
 }
@@ -18,15 +21,18 @@ const ProjectItem = ({ project }) => {
 const ProjectList = ({ projects }) => {
 
     return (
-        <table>
-            <th>
-                Name
-            </th>
-            <th>
-                Author
-            </th>
-            {projects.map((project) => <ProjectItem project={project} />)}
-        </table>
+        <div>
+            <table>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Author
+                </th>
+                {projects.map((project) => <ProjectItem project={project} deleteProject={deleteProject} />)}
+            </table>
+            <Link to='/projects/create'>Create</Link>
+        </div>
     )
 }
 
